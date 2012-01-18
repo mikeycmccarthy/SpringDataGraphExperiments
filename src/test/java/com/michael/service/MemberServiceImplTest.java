@@ -1,5 +1,6 @@
 package com.michael.service;
 
+import com.michael.model.Friendship;
 import com.michael.model.Member;
 import com.michael.repository.MemberRepository;
 import junit.framework.TestCase;
@@ -37,4 +38,22 @@ public class MemberServiceImplTest extends TestCase {
         Member member = memberService.findMember(memberId);
         assertEquals(memberId, member.getMemberId());
     }
+    
+    @Test
+    public void testAddFriend() throws Exception {
+        Long firstMemberId = 201L;
+        memberRepository.save(new Member(firstMemberId));
+        Member firstMember = memberService.findMember(firstMemberId);
+        Long secondMemberId = 202L;
+        memberRepository.save(new Member(secondMemberId));
+        Member secondMember = memberService.findMember(secondMemberId);
+
+        firstMember.addFriendship(secondMember);
+        memberRepository.save(firstMember);
+        Member firstMemberAfterPersistence = memberService.findMember(firstMemberId);
+        System.out.println("MemberServiceImplTest.testAddFriend");
+
+    }
+    
+    
 }
