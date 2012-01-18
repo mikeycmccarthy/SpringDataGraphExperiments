@@ -29,4 +29,12 @@ public class MemberServiceImplTest extends TestCase {
         Member retrievedMember = memberRepository.findByPropertyValue("memberId", memberId);
         assertEquals(memberId, retrievedMember.getMemberId());
     }
+
+    @Test
+    public void testFindMemberThatHasBeenCreated() throws Exception {
+        Long memberId = 201L;
+        memberRepository.save(new Member(memberId));
+        Member member = memberService.findMember(memberId);
+        assertEquals(memberId, member.getMemberId());
+    }
 }

@@ -17,4 +17,9 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(new Member(memberId));
     }
 
+    @Override
+    public Member findMember(Long memberId) {
+        return memberRepository.findByPropertyValue("memberId", memberId);
+    }
+
 }
