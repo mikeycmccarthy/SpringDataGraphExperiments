@@ -40,7 +40,7 @@ public class MemberServiceImplTest extends TestCase {
     }
     
     @Test
-    public void testAddFriend() throws Exception {
+    public void testAddReferral() throws Exception {
         Long firstMemberId = 201L;
         memberRepository.save(new Member(firstMemberId));
         Member firstMember = memberService.findMember(firstMemberId);
@@ -48,10 +48,19 @@ public class MemberServiceImplTest extends TestCase {
         memberRepository.save(new Member(secondMemberId));
         Member secondMember = memberService.findMember(secondMemberId);
 
-        firstMember.addFriendship(secondMember);
+        firstMember.refer(secondMember);
         memberRepository.save(firstMember);
+
         Member firstMemberAfterPersistence = memberService.findMember(firstMemberId);
-        System.out.println("MemberServiceImplTest.testAddFriend");
+        Member secondMemberAfterPersistence = memberService.findMember(secondMemberId);
+
+        assertEquals(1, firstMemberAfterPersistence.getReferees().size());
+        assertNull(firstMemberAfterPersistence.getReferer());
+
+        assertNotNull(secondMemberAfterPersistence.getReferer());
+        assertEquals(0, secondMemberAfterPersistence.getReferees().size());
+
+
 
     }
     

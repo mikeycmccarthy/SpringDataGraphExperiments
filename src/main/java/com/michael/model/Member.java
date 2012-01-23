@@ -1,5 +1,6 @@
 package com.michael.model;
 
+import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.*;
 
 import java.util.Set;
@@ -13,9 +14,11 @@ public class Member {
     @Indexed
     private Long memberId;
 
-    @Fetch
-    @RelatedToVia(type = "FRIENDS_WITH")
-    private Set<Friendship> friendships;
+    @RelatedToVia(type = "REFERRAL", direction = Direction.INCOMING)
+    private Referral referer;
+
+    @RelatedToVia(type = "REFERRAL", direction = Direction.OUTGOING)
+    private Set<Referral> referees;
 
     public Member() {
     }
@@ -28,8 +31,17 @@ public class Member {
         return memberId;
     }
 
-    public void addFriendship(Member otherMember){
-        friendships.add(new Friendship(this, otherMember, 12345L));
+    public void refer(Member memberToRefer){
+        referees.add(new Referral(this, memberToRefer));
     }
+
+    public Referral getReferer() {
+        return referer;
+    }
+
+    public Set<Referral> getReferees() {
+        return referees;
+    }
+
 
 }
