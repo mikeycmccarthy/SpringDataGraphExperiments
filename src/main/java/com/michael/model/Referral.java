@@ -24,4 +24,12 @@ public class Referral {
         this.referrer = referrer;
         this.referee = referee;
     }
+
+    public Member getReferee() {
+        return referee;
+    }
+
+    public Member getReferrer() {
+        return referrer;
+    }
 }

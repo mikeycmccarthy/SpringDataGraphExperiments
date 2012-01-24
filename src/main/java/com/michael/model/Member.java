@@ -14,8 +14,12 @@ public class Member {
     @Indexed
     private Long memberId;
 
+    /**
+     * SDN currently does not support RelatedToVia on a single reference, hence the set
+     * @see https://jira.springsource.org/browse/DATAGRAPH-182
+     */
     @RelatedToVia(type = "REFERRAL", direction = Direction.INCOMING)
-    private Referral referer;
+    private Set<Referral> referers;
 
     @RelatedToVia(type = "REFERRAL", direction = Direction.OUTGOING)
     private Set<Referral> referees;
@@ -36,12 +40,15 @@ public class Member {
     }
 
     public Referral getReferer() {
-        return referer;
+        if(!referers.isEmpty()){
+            return referers.iterator().next();
+        } else {
+            return null;
+        }
     }
 
     public Set<Referral> getReferees() {
         return referees;
     }
-
 
 }

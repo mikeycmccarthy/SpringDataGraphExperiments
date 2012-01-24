@@ -1,7 +1,7 @@
 package com.michael.service;
 
-import com.michael.model.Friendship;
 import com.michael.model.Member;
+import com.michael.model.Referral;
 import com.michael.repository.MemberRepository;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -34,18 +34,22 @@ public class MemberServiceImplTest extends TestCase {
     @Test
     public void testFindMemberThatHasBeenCreated() throws Exception {
         Long memberId = 201L;
-        memberRepository.save(new Member(memberId));
+        saveMember(memberId);
         Member member = memberService.findMember(memberId);
         assertEquals(memberId, member.getMemberId());
     }
     
     @Test
     public void testAddReferral() throws Exception {
+
         Long firstMemberId = 201L;
-        memberRepository.save(new Member(firstMemberId));
+        saveMember(firstMemberId);
+
         Member firstMember = memberService.findMember(firstMemberId);
+
         Long secondMemberId = 202L;
-        memberRepository.save(new Member(secondMemberId));
+        saveMember(secondMemberId);
+
         Member secondMember = memberService.findMember(secondMemberId);
 
         firstMember.refer(secondMember);
@@ -57,12 +61,18 @@ public class MemberServiceImplTest extends TestCase {
         assertEquals(1, firstMemberAfterPersistence.getReferees().size());
         assertNull(firstMemberAfterPersistence.getReferer());
 
-        assertNotNull(secondMemberAfterPersistence.getReferer());
-        assertEquals(0, secondMemberAfterPersistence.getReferees().size());
+        assertTrue(secondMemberAfterPersistence.getReferees().isEmpty());
 
+        Referral secondMemberReferralRelationship = secondMemberAfterPersistence.getReferer();
+
+        assertEquals(firstMemberId, secondMemberReferralRelationship.getReferrer().getMemberId());
 
 
     }
-    
-    
+
+    private void saveMember(Long firstMemberId) {
+        memberRepository.save(new Member(firstMemberId));
+    }
+
+
 }
