@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/graph-test-context.xml"})
@@ -53,20 +54,22 @@ public class MemberServiceImplTest extends TestCase {
         Member secondMember = memberService.findMember(secondMemberId);
 
         firstMember.refer(secondMember);
+
         memberRepository.save(firstMember);
 
         Member firstMemberAfterPersistence = memberService.findMember(firstMemberId);
         Member secondMemberAfterPersistence = memberService.findMember(secondMemberId);
 
-        assertEquals(1, firstMemberAfterPersistence.getReferees().size());
+        Set<Referral> refereesOfFirstMember = firstMemberAfterPersistence.getReferees();
+        assertEquals(1, refereesOfFirstMember.size());
         assertNull(firstMemberAfterPersistence.getReferer());
 
         assertTrue(secondMemberAfterPersistence.getReferees().isEmpty());
+        assertNotNull(secondMemberAfterPersistence.getReferer());
 
-        Referral secondMemberReferralRelationship = secondMemberAfterPersistence.getReferer();
-
-        assertEquals(firstMemberId, secondMemberReferralRelationship.getReferrer().getMemberId());
-
+        Referral firstMemberRefereesRelationship = refereesOfFirstMember.iterator().next();
+        assertEquals(firstMemberId, firstMemberRefereesRelationship.getReferrer().getMemberId());
+        assertEquals(secondMemberId, firstMemberRefereesRelationship.getReferee().getMemberId());
 
     }
 
