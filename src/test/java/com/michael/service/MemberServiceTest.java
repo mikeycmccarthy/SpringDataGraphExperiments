@@ -15,7 +15,7 @@ public class MemberServiceTest {
     private MemberService memberService;
 
     @Test
-    public void testRefer() throws Exception {
+    public void testTransactionBoundaryAppliesWhenReferringPeople() throws Exception {
         memberService.refer(10L, 20L);
     }
 }
