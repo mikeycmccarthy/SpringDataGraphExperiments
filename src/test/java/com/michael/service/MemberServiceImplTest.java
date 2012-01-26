@@ -73,6 +73,10 @@ public class MemberServiceImplTest extends TestCase {
 
     }
 
+
+
+
+
     private void saveMember(Long firstMemberId) {
         memberRepository.save(new Member(firstMemberId));
     }

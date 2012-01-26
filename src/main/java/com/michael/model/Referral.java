@@ -1,9 +1,6 @@
 package com.michael.model;
 
-import org.springframework.data.neo4j.annotation.EndNode;
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.RelationshipEntity;
-import org.springframework.data.neo4j.annotation.StartNode;
+import org.springframework.data.neo4j.annotation.*;
 
 @RelationshipEntity(type = "REFERRAL")
 public class Referral {
@@ -12,9 +9,11 @@ public class Referral {
     private Long graphId;
 
     @EndNode
+    @Fetch
     private Member referee;
 
     @StartNode
+    @Fetch
     private Member referrer;
 
     public Referral() {

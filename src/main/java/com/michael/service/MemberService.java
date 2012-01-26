@@ -4,8 +4,10 @@ import com.michael.model.Member;
 
 public interface MemberService {
 
-    void createMember(Long memberId);
+    Member createMember(Long memberId);
 
     Member findMember(Long memberId);
+
+    void refer(Long referer, Long referee);
 
 }
