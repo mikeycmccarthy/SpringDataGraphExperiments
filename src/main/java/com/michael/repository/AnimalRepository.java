@@ -1,8 +1,7 @@
 package com.michael.repository;
 
-import com.michael.model.Member;
+import com.michael.model.Animal;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
-public interface MemberRepository extends GraphRepository<Member> {
-
+public interface AnimalRepository extends GraphRepository<Animal> {
 }

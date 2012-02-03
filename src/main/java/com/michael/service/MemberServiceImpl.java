@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(refererMember);
     }
 
-     public Member getOrCreateMember(long memberId) {
+    public Member getOrCreateMember(long memberId) {
 
         Member member = memberRepository.findByPropertyValue("memberId", memberId);
 

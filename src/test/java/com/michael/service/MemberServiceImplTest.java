@@ -15,11 +15,10 @@ import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/graph-test-context.xml"})
-@Transactional
 public class MemberServiceImplTest extends TestCase {
     
     @Resource
-    private MemberServiceImpl memberService;
+    private MemberService memberService;
 
     @Resource
     private MemberRepository memberRepository;
@@ -39,43 +38,11 @@ public class MemberServiceImplTest extends TestCase {
         Member member = memberService.findMember(memberId);
         assertEquals(memberId, member.getMemberId());
     }
-    
+
     @Test
-    public void testAddReferral() throws Exception {
-
-        Long firstMemberId = 201L;
-        saveMember(firstMemberId);
-
-        Member firstMember = memberService.findMember(firstMemberId);
-
-        Long secondMemberId = 202L;
-        saveMember(secondMemberId);
-
-        Member secondMember = memberService.findMember(secondMemberId);
-
-        firstMember.refer(secondMember);
-
-        memberRepository.save(firstMember);
-
-        Member firstMemberAfterPersistence = memberService.findMember(firstMemberId);
-        Member secondMemberAfterPersistence = memberService.findMember(secondMemberId);
-
-        Set<Referral> refereesOfFirstMember = firstMemberAfterPersistence.getReferees();
-        assertEquals(1, refereesOfFirstMember.size());
-        assertNull(firstMemberAfterPersistence.getReferer());
-
-        assertTrue(secondMemberAfterPersistence.getReferees().isEmpty());
-        assertNotNull(secondMemberAfterPersistence.getReferer());
-
-        Referral firstMemberRefereesRelationship = refereesOfFirstMember.iterator().next();
-        assertEquals(firstMemberId, firstMemberRefereesRelationship.getReferrer().getMemberId());
-        assertEquals(secondMemberId, firstMemberRefereesRelationship.getReferee().getMemberId());
-
+    public void testRefer() throws Exception {
+        memberService.refer(10L,20L);
     }
-
-
-
-
 
     private void saveMember(Long firstMemberId) {
         memberRepository.save(new Member(firstMemberId));
