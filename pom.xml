@@ -10,6 +10,8 @@
 
     <properties>
         <spring.version>3.1.0.RELEASE</spring.version>
+        <neo4j.version>1.6.1</neo4j.version>
+        <spring-data-neo4j.version>2.1.0.BUILD-SNAPSHOT</spring-data-neo4j.version>
     </properties>
 
     <repositories>
@@ -96,7 +98,7 @@
         <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j-cypher</artifactId>
-            <version>1.6.M03</version>
+            <version>${neo4j.version}</version>
         </dependency>
 
         <!-- See http://forum.springsource.org/showthread.php?121041-Maven-issue-with-Spring-Data-Neo4j-2-0-0-RELEASE&highlight=spring-data-commons+1.2 for
@@ -104,7 +106,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-neo4j</artifactId>
-            <version>2.0.0.RELEASE</version>
+            <version>${spring-data-neo4j.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.data</groupId>
@@ -122,7 +124,7 @@
         <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j-kernel</artifactId>
-            <version>1.6.M03</version>
+            <version>${neo4j.version}</version>
             <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
@@ -132,6 +134,12 @@
             <artifactId>junit</artifactId>
             <version>4.10</version>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.8.5</version>
+        </dependency>
+
 
     </dependencies>
 

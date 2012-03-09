@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 
 @Service
+@Transactional
 public class MemberServiceImpl implements MemberService {
 
     @Resource
@@ -24,7 +25,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @Transactional
     public void refer(Long referer, Long referee) {
         Member refererMember = getOrCreateMember(referer);
         Member refereeMember = getOrCreateMember(referee);
@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(refererMember);
     }
 
-    public Member getOrCreateMember(long memberId) {
+    private Member getOrCreateMember(long memberId) {
 
         Member member = memberRepository.findByPropertyValue("memberId", memberId);
 
