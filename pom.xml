@@ -9,9 +9,9 @@
     <version>1.0</version>
 
     <properties>
-        <spring.version>3.1.0.RELEASE</spring.version>
-        <neo4j.version>1.6.1</neo4j.version>
-        <spring-data-neo4j.version>2.1.0.BUILD-SNAPSHOT</spring-data-neo4j.version>
+        <spring.version>3.2.0.M1</spring.version>
+        <neo4j.version>1.7.1</neo4j.version>
+        <spring-data-neo4j.version>2.1.0.RC2</spring-data-neo4j.version>
     </properties>
 
     <repositories>
@@ -34,44 +34,6 @@
                     <optimize>true</optimize>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>aspectj-maven-plugin</artifactId>
-                <version>1.2</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjrt</artifactId>
-                        <version>1.6.12</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjtools</artifactId>
-                        <version>1.6.12</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>test-compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <outxml>true</outxml>
-                    <aspectLibraries>
-                        <aspectLibrary>
-                            <groupId>org.springframework</groupId>
-                            <artifactId>spring-aspects</artifactId>
-                        </aspectLibrary>
-                    </aspectLibraries>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-
         </plugins>
     </build>
 
@@ -101,24 +63,10 @@
             <version>${neo4j.version}</version>
         </dependency>
 
-        <!-- See http://forum.springsource.org/showthread.php?121041-Maven-issue-with-Spring-Data-Neo4j-2-0-0-RELEASE&highlight=spring-data-commons+1.2 for
-    details about this exclusion -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-neo4j</artifactId>
             <version>${spring-data-neo4j.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.data</groupId>
-                    <artifactId>spring-data-commons-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-commons-core</artifactId>
-            <version>1.2.0.RELEASE</version>
         </dependency>
 
         <dependency>
