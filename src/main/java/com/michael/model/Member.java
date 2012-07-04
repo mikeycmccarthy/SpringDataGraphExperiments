@@ -11,7 +11,7 @@ public class Member {
     @GraphId
     private Long graphId;
 
-    @Indexed
+    @Indexed(unique = true)
     private Long memberId;
 
     /**

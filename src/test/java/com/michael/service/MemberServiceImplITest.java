@@ -66,19 +66,24 @@ public class MemberServiceImplITest extends TestCase {
     @Test
     public void testUniquenessInMultiThreadedScenario() throws Exception {
 
-        final Long firstMember = 100L;
-        
         final List<Exception> exceptionList = new ArrayList<Exception>();
-
+        final long firstMember = 100L;
+        long time=System.currentTimeMillis();
         ExecutorService exec = Executors.newFixedThreadPool(16);
-        for (int i = 101; i < 1000; i++) {
-            final Long buddyId = new Long(i);
+        int count = 200;
+        for (long i = firstMember+1; i < firstMember+1+ count; i++) {
+            final Long buddyId = i;
             exec.execute(new Runnable() {
                 @Override
                 public void run() {
                     try {
+                        System.out.print(".");
+                        if (buddyId % 100 == 0) System.out.println();
+                        // more realistic
+                        // long firstMember = (int)(Math.random() * count)+100;
                         memberService.refer(firstMember, buddyId);
                     } catch (NoSuchElementException noSuchElementException) {
+                        System.err.println("NoSuchElementException "+noSuchElementException.getMessage());
                         exceptionList.add(noSuchElementException);
                     }
                 }
@@ -88,8 +93,10 @@ public class MemberServiceImplITest extends TestCase {
         }
 
         exec.shutdown();
-        exec.awaitTermination(50, TimeUnit.SECONDS);
+        exec.awaitTermination(500, TimeUnit.SECONDS);
         
+        long delta=System.currentTimeMillis()-time;
+        System.out.println("Creating "+count+" referrals took "+delta+" ms.");
         assertTrue("Exceptions found when creating nodes", exceptionList.isEmpty());
         
     }

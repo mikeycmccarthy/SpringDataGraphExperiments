@@ -1,1 +1,17 @@
-This file was created by IntelliJ IDEA 11.0.1 for binding GitHub repository
+Added explicit locking to MemberServiceImpl.refer to avoid deadlocks.
+
+MUST USE:
+
+    @Indexed(unique = true)
+    private Long memberId;
+
+Otherwise the index-lock on the id will not be held, so that multiple nodes with that id might get created.
+
+The MemberServiceImplTest.testUniquenessInMultiThreadedScenario is a bit artificial,
+in a real scenario it would:
+
+* not create all referrals to a single member
+* use a bigger batch granularity (not just ONE referrer but a bunch of messages from a queue in one)
+* probably a finer grained locking (e.g. on both members or a subset of the members (category node))
+  locking both members could result in a deadlock if you had both referrals a->b and b->b in two concurrent threads at the same time
+  which results in a deadlock exception (no stalling) and would have to be retried

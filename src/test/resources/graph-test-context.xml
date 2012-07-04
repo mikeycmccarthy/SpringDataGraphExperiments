@@ -16,7 +16,7 @@
 
     <bean id="graphDatabaseService" class="org.neo4j.test.ImpermanentGraphDatabase" destroy-method="shutdown"/>
 
-    <tx:annotation-driven mode="aspectj"/>
+    <tx:annotation-driven mode="proxy"/>
 
     <context:component-scan base-package="com.michael.service"/>
 

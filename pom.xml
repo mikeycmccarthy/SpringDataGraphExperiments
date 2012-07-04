@@ -10,7 +10,8 @@
 
     <properties>
         <spring.version>3.2.0.M1</spring.version>
-        <neo4j.version>1.7.1</neo4j.version>
+        <neo4j.version>1.7.2</neo4j.version>
+        <!-- testing with new error handling code spring-data-neo4j.version>2.1.0.BUILD-SNAPSHOT</spring-data-neo4j.version-->
         <spring-data-neo4j.version>2.1.0.RC2</spring-data-neo4j.version>
     </properties>
 
